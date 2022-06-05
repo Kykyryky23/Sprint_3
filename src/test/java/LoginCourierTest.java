@@ -2,7 +2,6 @@ import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import pojo.CourierAuthorizationData;
 import pojo.CourierDetails;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -17,7 +16,7 @@ public class LoginCourierTest {
 
     CourierDetails courierDetails;
     Courier courier;
-    CourierAuthorizationData courierAuthorizationData;
+    CourierDetails courierAuthorizationData;
 
     @Before
     public void setup() {
@@ -25,7 +24,7 @@ public class LoginCourierTest {
         courierDetails = new CourierDetails(login, password, firstName);
         courier = new Courier();
         courier.createCourier(courierDetails);
-        courierAuthorizationData = new CourierAuthorizationData(login, password);
+        courierAuthorizationData = new CourierDetails(login, password);
         Response responseLogin = courier.loginCourier(courierAuthorizationData);
         courierId = responseLogin.body().jsonPath().getInt("id");
 

@@ -2,7 +2,6 @@ import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import pojo.CourierAuthorizationData;
 import pojo.CourierDetails;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -16,7 +15,7 @@ public class CreateCourierTest {
 
     CourierDetails courierDetails;
     Courier courier;
-    CourierAuthorizationData courierAuthorizationData;
+    CourierDetails courierAuthorizationData;
     Response responseCreate;
 
     @Before
@@ -24,39 +23,47 @@ public class CreateCourierTest {
 
         courierDetails = new CourierDetails(login, password, firstName);
         courier = new Courier();
-        responseCreate = courier.createCourier(courierDetails);
 
     }
 
     @After
-    public void clear() {
+    public void clear()  {
 
-        courierAuthorizationData = new CourierAuthorizationData(login, password);
-        Response responseLogin = courier.loginCourier(courierAuthorizationData);
-        courierId = responseLogin.body().jsonPath().getInt("id");
-        courier.deleteCourier(courierId);
+        if (courierDetails.getLogin() != "") {
+            if (courierDetails.getPassword() != "") {
+                courierAuthorizationData = new CourierDetails(login, password);
+                Response responseLogin = courier.loginCourier(courierAuthorizationData);
+                courierId = responseLogin.body().jsonPath().getInt("id");
+                courier.deleteCourier(courierId);
 
+            }
+        }
     }
 
     @Test
     public void createNewCourier () {
-
-        Response responseCreateDouble = courier.createCourier(courierDetails);
-
+        responseCreate = courier.createCourier(courierDetails);
         responseCreate.then()
                 .statusCode(201)
                 .and()
                 .assertThat().body("ok", equalTo(true));
 
+    }
+
+    @Test
+    public void createDoubleCourier () {
+
+        courier.createCourier(courierDetails);
+        Response responseCreateDouble = courier.createCourier(courierDetails);
         responseCreateDouble.then()
                 .statusCode(409)
                 .and()
                 .assertThat().body("message", equalTo("Этот логин уже используется. Попробуйте другой."));
 
-    }
+        }
 
     @Test
-    public void createCourierWithoutFieldLogin() {
+    public void createCourierWithoutEnteringLogin () {
 
         courierDetails.setLogin("");
 
@@ -69,7 +76,7 @@ public class CreateCourierTest {
     }
 
     @Test
-    public void createCourierWithoutFieldPassword () {
+    public void createCourierWithoutEnteringPassword () {
 
         courierDetails.setPassword("");
 
@@ -78,6 +85,8 @@ public class CreateCourierTest {
                 .statusCode(400)
                 .and()
                 .assertThat().body("message", equalTo("Недостаточно данных для создания учетной записи"));
+
+        System.out.println(courierDetails.getLogin() + " " + courierDetails.getPassword());
 
     }
 }

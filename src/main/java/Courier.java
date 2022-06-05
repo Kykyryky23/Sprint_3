@@ -17,7 +17,7 @@ public class Courier {
 
     }
 
-    public Response loginCourier(CourierAuthorizationData courierAuthorizationData) {
+    public Response loginCourier(CourierDetails courierAuthorizationData) {
 
         return given()
                 .header("Content-type", "application/json")

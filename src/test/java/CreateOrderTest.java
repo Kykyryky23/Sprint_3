@@ -8,6 +8,8 @@ import static org.hamcrest.Matchers.notNullValue;
 
 @RunWith(Parameterized.class)
 public class CreateOrderTest {
+
+    Order order = new Order();
     private final String firstName;
     private final String lastName;
     private final String address;
@@ -53,7 +55,6 @@ public class CreateOrderTest {
 
         OrderDetails orderDetails = new OrderDetails(firstName, lastName, address, metroStation,
                 phone, rentTime, deliveryDate, comment, color);
-        Order order = new Order();
         Response responseCreate = order.createOrder(orderDetails);
 
         responseCreate.then()
