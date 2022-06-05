@@ -1,5 +1,4 @@
 import io.restassured.response.Response;
-import pojo.CourierAuthorizationData;
 import pojo.CourierDetails;
 
 import static io.restassured.RestAssured.given;

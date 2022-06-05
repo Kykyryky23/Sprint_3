@@ -31,6 +31,7 @@ public class CreateCourierTest {
 
         if (courierDetails.getLogin() != "") {
             if (courierDetails.getPassword() != "") {
+
                 courierAuthorizationData = new CourierDetails(login, password);
                 Response responseLogin = courier.loginCourier(courierAuthorizationData);
                 courierId = responseLogin.body().jsonPath().getInt("id");
@@ -60,7 +61,7 @@ public class CreateCourierTest {
                 .and()
                 .assertThat().body("message", equalTo("Этот логин уже используется. Попробуйте другой."));
 
-        }
+    }
 
     @Test
     public void createCourierWithoutEnteringLogin () {

@@ -15,8 +15,10 @@ public class CourierDetails {
     }
 
     public CourierDetails(String login, String password) {
+
         this.login = login;
         this.password = password;
+
     }
 
     public String getLogin() {
