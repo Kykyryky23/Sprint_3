@@ -29,8 +29,8 @@ public class CreateCourierTest {
     @After
     public void clear()  {
 
-        if (courierDetails.getLogin() != "") {
-            if (courierDetails.getPassword() != "") {
+        if (!courierDetails.getLogin().equals("")) {
+            if (!courierDetails.getPassword().equals("")) {
 
                 courierAuthorizationData = new CourierDetails(login, password);
                 Response responseLogin = courier.loginCourier(courierAuthorizationData);

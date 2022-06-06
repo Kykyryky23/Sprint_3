@@ -51,7 +51,7 @@ public class CreateOrderTest {
     }
 
     @Test
-    public void createCourierWithoutFieldLogin() {
+    public void createOrderWithoutFieldLogin() {
 
         OrderDetails orderDetails = new OrderDetails(firstName, lastName, address, metroStation,
                 phone, rentTime, deliveryDate, comment, color);
